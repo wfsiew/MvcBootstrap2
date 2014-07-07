@@ -1,0 +1,13 @@
+﻿.content {
+    padding-top: 50px;
+}
+
+td.menuitem {
+    width: 50px;
+}
+
+td.menuitem1 {
+    width: 80px;
+}
+
+.nav, .pagination, .carousel a { cursor: pointer; }

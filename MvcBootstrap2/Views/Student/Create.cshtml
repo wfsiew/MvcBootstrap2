@@ -1,0 +1,55 @@
+﻿@model MvcBootstrap2.Models.StudentModel
+
+@using MvcBootstrap2.Helper;
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<div class="well">
+@using (Html.BeginForm("Create", "Student", FormMethod.Post, new { name = "studentform", @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Student</legend>
+
+        <div class="control-group">
+            <label class="control-label">Last Name</label>
+            <div class="controls">
+                @Html.TextBoxFor(model => model.LastName, HtmlHelpers.TextBoxAttributes("Last Name"))
+                @Html.ValidationMessageFor(model => model.LastName,  "", new { @class = "label label-important" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">First Name</label>
+            <div class="controls">
+                @Html.TextBoxFor(model => model.FirstMidName, HtmlHelpers.TextBoxAttributes("First Name"))
+                @Html.ValidationMessageFor(model => model.FirstMidName, "", new { @class = "label label-important" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Enrollment Date</label>
+            <div class="controls">
+                @Html.TextBoxFor(model => model.EnrollmentDate, HtmlHelpers.TextBoxAttributes("Enrollment Date"))
+                @Html.ValidationMessageFor(model => model.EnrollmentDate, "", new { @class = "label label-important" })
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Create</button>
+                <a class="btn btn-default" href="@Url.Action("Index")"><i class="icon-arrow-left icon-white"></i> Cancel</a>
+            </div>
+        </div>
+    </fieldset>
+}
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
