@@ -110,7 +110,7 @@ namespace MvcBootstrap2.Controllers
         public ActionResult Create()
         {
             ViewBag.menu = MENU;
-            return View(new StudentModel());
+            return View();
         }
 
         //

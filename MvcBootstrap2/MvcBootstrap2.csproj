@@ -202,6 +202,7 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Global.asax.cs">
@@ -210,6 +211,8 @@
     <Compile Include="Helper\Constants.cs" />
     <Compile Include="Helper\DbHelper.cs" />
     <Compile Include="Helper\HtmlHelpers.cs" />
+    <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\Instructor.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -220,6 +223,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
+    <Content Include="Views\Department\Create.cshtml" />
+    <Content Include="Views\Department\Delete.cshtml" />
+    <Content Include="Views\Department\Details.cshtml" />
+    <Content Include="Views\Department\Edit.cshtml" />
+    <Content Include="Views\Department\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
