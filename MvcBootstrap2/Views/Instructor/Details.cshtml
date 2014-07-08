@@ -1,0 +1,57 @@
+﻿@model MvcBootstrap2.Models.Instructor
+
+@using MvcBootstrap2.Helper;
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="well">
+    <form class="form-horizontal" role="form">
+        <fieldset>
+            <legend>Instructor</legend>
+
+            <div class="control-group">
+                @Html.LabelFor(model => model.LastName, HtmlHelpers.LabelAttributes())
+                <div class="controls">
+                    @Html.DisplayFor(model => model.LastName)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(model => model.FirstMidName, HtmlHelpers.LabelAttributes())
+                <div class="controls">
+                    @Html.DisplayFor(model => model.FirstMidName)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(model => model.HireDate, HtmlHelpers.LabelAttributes())
+                <div class="controls">
+                    @Html.DisplayFor(model => model.HireDate)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(model => model.FullName, HtmlHelpers.LabelAttributes())
+                <div class="controls">
+                    @Html.DisplayFor(model => model.FullName)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(model => model.OfficeAssignment.Location, HtmlHelpers.LabelAttributes())
+                <div class="controls">
+                    @Html.DisplayFor(model => model.OfficeAssignment.Location)
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <ul class="nav">
+            <li><a href="@Url.Action("Edit", new { id = Model.Id.ToString() })"><i class="icon-pencil icon-white"></i> Edit</a></li>
+            <li><a href="@Url.Action("Index")"><i class="icon-arrow-left icon-white"></i> Back to List</a></li>
+        </ul>
+    </div>
+</div>

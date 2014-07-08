@@ -1,0 +1,51 @@
+﻿@model MvcBootstrap2.Models.Course
+
+@using MvcBootstrap2.Helper;
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="well">
+    <form class="form-horizontal" role="form">
+        <fieldset>
+            <legend>Course</legend>
+
+            <div class="control-group">
+                @Html.LabelFor(model => model.Id, HtmlHelpers.LabelAttributes())
+                <div class="controls">
+                    @Model.Id.ToString()
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(model => model.Title, HtmlHelpers.LabelAttributes())
+                <div class="controls">
+                    @Html.DisplayFor(model => model.Title)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(model => model.Credits, HtmlHelpers.LabelAttributes())
+                <div class="controls">
+                    @Html.DisplayFor(model => model.Credits)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(model => model.Department.Name, HtmlHelpers.LabelAttributes())
+                <div class="controls">
+                    @Html.DisplayFor(model => model.Department.Name)
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <ul class="nav">
+            <li><a href="@Url.Action("Edit", new { id = Model.Id.ToString() })"><i class="glyphicon glyphicon-pencil icon-white"></i> Edit</a></li>
+            <li><a href="@Url.Action("Index")"><i class="glyphicon glyphicon-arrow-left icon-white"></i> Back to List</a></li>
+        </ul>
+    </div>
+</div>

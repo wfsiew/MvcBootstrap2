@@ -1,0 +1,93 @@
+﻿@model MvcBootstrap2.Models.Instructor
+
+@using MvcBootstrap2.ViewModels;
+@using MvcBootstrap2.Helper;
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+<div class="well">
+@using (Html.BeginForm("Edit", "Instructor", FormMethod.Post, new { name = "instructorform", @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Instructor</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.LastName, HtmlHelpers.LabelAttributes())
+            <div class="controls">
+                @Html.TextBoxFor(model => model.LastName, HtmlHelpers.TextBoxAttributes("Last Name"))
+                @Html.ValidationMessageFor(model => model.LastName,  "", new { @class = "label label-important" })
+            </div>
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(model => model.FirstMidName, HtmlHelpers.LabelAttributes())
+            <div class="controls">
+                @Html.TextBoxFor(model => model.FirstMidName, HtmlHelpers.TextBoxAttributes("First Name"))
+                @Html.ValidationMessageFor(model => model.FirstMidName,  "", new { @class = "label label-important" })
+            </div>
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(model => model.HireDate, HtmlHelpers.LabelAttributes())
+            <div class="controls">
+                @Html.TextBoxFor(model => model.HireDate, HtmlHelpers.TextBoxAttributes("Hire Date"))
+                @Html.ValidationMessageFor(model => model.HireDate,  "", new { @class = "label label-important" })
+            </div>
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(model => model.OfficeAssignment.Location, HtmlHelpers.LabelAttributes())
+            <div class="controls">
+                @Html.TextBoxFor(model => model.OfficeAssignment.Location, HtmlHelpers.TextBoxAttributes("Office Location"))
+                @Html.ValidationMessageFor(model => model.OfficeAssignment.Location,  "", new { @class = "label label-important" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Courses</label>
+            <div class="controls">
+                <table>
+                    <tr>
+                        @{
+                            int cnt = 0;
+                            List<AssignedCourseData> courses = ViewBag.Courses;
+
+                            foreach (AssignedCourseData course in courses)
+                            {
+                                if (cnt++ % 3 == 0)
+                                {
+                                    @:  </tr> <tr> 
+                                }
+                                @: <td>
+                                    <input type="checkbox" 
+                                           name="selectedCourses" 
+                                           value="@course.CourseID.ToString()" 
+                                           @(Html.Raw(course.Assigned ? "checked=\"checked\"" : "")) /> 
+                                    @course.CourseID.ToString() @:  @course.Title
+                                @:</td>
+                            }
+                            @: </tr>
+                        }
+                </table>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Save</button>
+                <a class="btn btn-default" href="@Url.Action("Index")"><i class="icon-arrow-left icon-white"></i> Cancel</a>
+            </div>
+        </div>
+    </fieldset>
+}
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
