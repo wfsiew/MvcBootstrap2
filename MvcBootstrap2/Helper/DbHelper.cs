@@ -18,7 +18,8 @@ namespace MvcBootstrap2.Helper
                 if (db == null)
                 {
                     var connectionString = ConfigurationManager.AppSettings.Get("MONGOLAB_URI");
-                    var client = new MongoClient(connectionString);
+                    var url = new MongoUrl(connectionString);
+                    var client = new MongoClient(url);
                     var server = client.GetServer();
                     db = server.GetDatabase("appdb");
                 }
