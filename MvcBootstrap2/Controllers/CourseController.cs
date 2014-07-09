@@ -71,11 +71,11 @@ namespace MvcBootstrap2.Controllers
                     break;
 
                 case "CourseID":
-                    el = c.OrderBy(x => x.Id);
+                    el = c.OrderBy(x => x.CourseID);
                     break;
 
                 case "CourseID_desc":
-                    el = c.OrderByDescending(x => x.Id);
+                    el = c.OrderByDescending(x => x.CourseID);
                     break;
 
                 case "Credits":
@@ -129,7 +129,7 @@ namespace MvcBootstrap2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Title,Credits,DepartmentId")] CourseModel course)
+        public ActionResult Create([Bind(Include = "CourseID,Title,Credits,DepartmentId")] CourseModel course)
         {
             ViewBag.menu = MENU;
             try
@@ -137,6 +137,7 @@ namespace MvcBootstrap2.Controllers
                 if (ModelState.IsValid)
                 {
                     Course o = new Course();
+                    o.CourseID = course.CourseID;
                     o.Title = course.Title;
                     o.Credits = course.Credits;
                     o.DepartmentId = new ObjectId(course.DepartmentId);
@@ -171,6 +172,7 @@ namespace MvcBootstrap2.Controllers
             }
 
             CourseModel o = new CourseModel();
+            o.CourseID = course.CourseID;
             o.Credits = course.Credits;
             o.DepartmentId = course.DepartmentId.ToString();
             o.Id = course.Id.ToString();
@@ -193,6 +195,7 @@ namespace MvcBootstrap2.Controllers
                 var courses = Course.GetCollection();
                 var q = Query<Course>.EQ(x => x.Id, new ObjectId(course.Id));
                 Course o = courses.FindOne(q);
+                o.CourseID = course.CourseID;
                 o.Credits = course.Credits;
                 o.DepartmentId = new ObjectId(course.DepartmentId);
                 o.Title = course.Title;

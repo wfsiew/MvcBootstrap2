@@ -15,9 +15,11 @@ namespace MvcBootstrap2.Models
     {
         private const string COLLECTION_NAME = "courses";
 
+        public ObjectId Id { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(Name = "Number")]
-        public ObjectId Id { get; set; }
+        public int CourseID { get; set; }
 
         [StringLength(50, MinimumLength = 3)]
         public string Title { get; set; }
@@ -69,15 +71,18 @@ namespace MvcBootstrap2.Models
         public static MongoCollection<Course> GetCollection()
         {
             MongoCollection<Course> a = DbHelper.Db.GetCollection<Course>(COLLECTION_NAME);
+            a.EnsureIndex(new IndexKeysBuilder().Ascending("Number"), IndexOptions.SetUnique(true));
             return a;
         }
     }
 
     public class CourseModel
     {
+        public string Id { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(Name = "Number")]
-        public string Id { get; set; }
+        public int CourseID { get; set; }
 
         [StringLength(50, MinimumLength = 3)]
         public string Title { get; set; }

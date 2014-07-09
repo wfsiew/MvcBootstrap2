@@ -65,7 +65,7 @@
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id.ToString() })
                 </td>
                 <td>
-                    @item.Id.ToString()
+                    @Html.DisplayFor(modelItem => item.CourseID)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)

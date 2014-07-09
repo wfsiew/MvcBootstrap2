@@ -18,6 +18,13 @@
         <legend>Course</legend>
 
         <div class="control-group">
+            @Html.LabelFor(model => model.CourseID, HtmlHelpers.LabelAttributes())
+            <div class="controls">
+                @Html.TextBoxFor(model => model.CourseID, HtmlHelpers.TextBoxAttributes("Number"))
+                @Html.ValidationMessageFor(model => model.CourseID, "", new { @class = "label label-important" })
+            </div>
+        </div>
+        <div class="control-group">
             @Html.LabelFor(model => model.Title, HtmlHelpers.LabelAttributes())
             <div class="controls">
                 @Html.TextBoxFor(model => model.Title, HtmlHelpers.TextBoxAttributes("Title"))

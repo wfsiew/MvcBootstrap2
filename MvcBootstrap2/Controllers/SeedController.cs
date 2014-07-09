@@ -97,37 +97,37 @@ namespace MvcBootstrap2.Controllers
 
             var courses = new List<Course>
             {
-                new Course {Title = "Chemistry",      Credits = 3,
+                new Course {CourseID = 1050, Title = "Chemistry",      Credits = 3,
                   DepartmentId = departments.Single( s => s.Name == "Engineering").Id,
                   InstructorIdList = new List<ObjectId>(),
                   EnrollmentIdList = new List<ObjectId>()
                 },
-                new Course {Title = "Microeconomics", Credits = 3,
+                new Course {CourseID = 4022, Title = "Microeconomics", Credits = 3,
                   DepartmentId = departments.Single( s => s.Name == "Economics").Id,
                   InstructorIdList = new List<ObjectId>(),
                   EnrollmentIdList = new List<ObjectId>()
                 },
-                new Course {Title = "Macroeconomics", Credits = 3,
+                new Course {CourseID = 4041, Title = "Macroeconomics", Credits = 3,
                   DepartmentId = departments.Single( s => s.Name == "Economics").Id,
                   InstructorIdList = new List<ObjectId>(),
                   EnrollmentIdList = new List<ObjectId>()
                 },
-                new Course {Title = "Calculus",       Credits = 4,
+                new Course {CourseID = 1045, Title = "Calculus",       Credits = 4,
                   DepartmentId = departments.Single( s => s.Name == "Mathematics").Id,
                   InstructorIdList = new List<ObjectId>(),
                   EnrollmentIdList = new List<ObjectId>()
                 },
-                new Course {Title = "Trigonometry",   Credits = 4,
+                new Course {CourseID = 3141, Title = "Trigonometry",   Credits = 4,
                   DepartmentId = departments.Single( s => s.Name == "Mathematics").Id,
                   InstructorIdList = new List<ObjectId>(),
                   EnrollmentIdList = new List<ObjectId>()
                 },
-                new Course {Title = "Composition",    Credits = 3,
+                new Course {CourseID = 2021, Title = "Composition",    Credits = 3,
                   DepartmentId = departments.Single( s => s.Name == "English").Id,
                   InstructorIdList = new List<ObjectId>(),
                   EnrollmentIdList = new List<ObjectId>()
                 },
-                new Course {Title = "Literature",     Credits = 4,
+                new Course {CourseID = 2042, Title = "Literature",     Credits = 4,
                   DepartmentId = departments.Single( s => s.Name == "English").Id,
                   InstructorIdList = new List<ObjectId>(),
                   EnrollmentIdList = new List<ObjectId>()
