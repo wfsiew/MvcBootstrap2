@@ -8,7 +8,7 @@ namespace MvcBootstrap2.ViewModels
 {
     public class AssignedCourseData
     {
-        public ObjectId CourseID { get; set; }
+        public int CourseID { get; set; }
         public string Title { get; set; }
         public bool Assigned { get; set; }
     }
