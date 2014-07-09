@@ -17,7 +17,7 @@ namespace MvcBootstrap2.Controllers
         // GET: /Seed/
         public ActionResult Index()
         {
-            //ClearAll();
+            ClearAll();
 
             var students = new List<Student>
             {

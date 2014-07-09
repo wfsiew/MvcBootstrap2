@@ -21,7 +21,7 @@ namespace MvcBootstrap2.Helper
                     var url = new MongoUrl(connectionString);
                     var client = new MongoClient(url);
                     var server = client.GetServer();
-                    db = server.GetDatabase("appdb");
+                    db = server.GetDatabase(url.DatabaseName);
                 }
 
                 return db;
