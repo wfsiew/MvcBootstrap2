@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcBootstrap2", "MvcBootstrap2\MvcBootstrap2.csproj", "{7429F8AB-1D54-4A83-8B24-9BAFC45128CB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{E42517F3-F04B-4226-940F-DFAF2BDE923B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{7429F8AB-1D54-4A83-8B24-9BAFC45128CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7429F8AB-1D54-4A83-8B24-9BAFC45128CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7429F8AB-1D54-4A83-8B24-9BAFC45128CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E42517F3-F04B-4226-940F-DFAF2BDE923B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E42517F3-F04B-4226-940F-DFAF2BDE923B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E42517F3-F04B-4226-940F-DFAF2BDE923B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E42517F3-F04B-4226-940F-DFAF2BDE923B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
