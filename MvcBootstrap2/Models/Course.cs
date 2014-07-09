@@ -71,7 +71,7 @@ namespace MvcBootstrap2.Models
         public static MongoCollection<Course> GetCollection()
         {
             MongoCollection<Course> a = DbHelper.Db.GetCollection<Course>(COLLECTION_NAME);
-            a.EnsureIndex(new IndexKeysBuilder().Ascending("Number"), IndexOptions.SetUnique(true));
+            //a.CreateIndex(IndexKeys<Course>.Ascending(x => x.CourseID), IndexOptions.SetUnique(true));
             return a;
         }
     }
