@@ -48,7 +48,7 @@
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(model => model.Id.ToString())
+    @Html.HiddenFor(model => model.Id)
     @Html.HiddenFor(model => model.RowVersion)
     <p>
         <button type="submit" class="btn btn-primary"><i class="icon-trash icon-white"></i>Delete</button>
