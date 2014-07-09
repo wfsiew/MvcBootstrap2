@@ -20,6 +20,20 @@ namespace MvcBootstrap2.Models
         [Display(Name = "Enrollment Date")]
         public DateTime EnrollmentDate { get; set; }
 
+        public List<ObjectId> EnrollmentIdList { get; set; }
+
+        public IEnumerable<Enrollment> Enrollments
+        {
+            get
+            {
+                var q = Query<Enrollment>.Where(x => EnrollmentIdList.Contains(x.Id));
+                var a = Enrollment.GetCollection();
+                var b = a.Find(q);
+                List<Enrollment> l = b.ToList();
+                return l;
+            }
+        }
+
         public static MongoCollection<Student> GetCollection()
         {
             MongoCollection<Student> a = DbHelper.Db.GetCollection<Student>(COLLECTION_NAME);

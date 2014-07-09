@@ -63,7 +63,7 @@
         @foreach (Instructor item in Model.Instructors)
         {
             string selectedRow = "";
-            if (item.Id == ViewBag.PersonID)
+            if (item.Id.ToString() == ViewBag.PersonID)
             {
                 selectedRow = "success";
             }
