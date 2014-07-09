@@ -15,12 +15,6 @@ namespace MvcBootstrap2.Controllers
     public class CourseController : Controller
     {
         public const string MENU = "Course";
-        private MongoCollection<Course> courses;
-
-        public CourseController()
-        {
-            courses = DbHelper.Db.GetCollection<Course>("courses");
-        }
 
         //
         // GET: /Course/
@@ -45,6 +39,7 @@ namespace MvcBootstrap2.Controllers
             ViewBag.CurrentFilter = searchString;
             MongoCursor<Course> c = null;
             IOrderedEnumerable<Course> el = null;
+            var courses = Course.GetCollection();
 
             if (!string.IsNullOrEmpty(keyword))
             {
@@ -108,6 +103,7 @@ namespace MvcBootstrap2.Controllers
         public ActionResult Details(string id)
         {
             ViewBag.menu = MENU;
+            var courses = Course.GetCollection();
             var q = Query<Course>.EQ(x => x.Id, new ObjectId(id));
             Course course = courses.FindOne(q);
             if (course == null)
@@ -144,6 +140,7 @@ namespace MvcBootstrap2.Controllers
                     o.Title = course.Title;
                     o.Credits = course.Credits;
                     o.DepartmentId = new ObjectId(course.DepartmentId);
+                    var courses = Course.GetCollection();
                     courses.Insert(o);
                     TempData["message"] = string.Format("{0} has been saved", course.Title);
                     return RedirectToAction("Index");
@@ -165,6 +162,7 @@ namespace MvcBootstrap2.Controllers
         public ActionResult Edit(string id)
         {
             ViewBag.menu = MENU;
+            var courses = Course.GetCollection();
             var q = Query<Course>.EQ(x => x.Id, new ObjectId(id));
             Course course = courses.FindOne(q);
             if (course == null)
@@ -192,6 +190,7 @@ namespace MvcBootstrap2.Controllers
             ViewBag.menu = MENU;
             if (ModelState.IsValid)
             {
+                var courses = Course.GetCollection();
                 var q = Query<Course>.EQ(x => x.Id, new ObjectId(course.Id));
                 Course o = courses.FindOne(q);
                 o.Credits = course.Credits;
@@ -212,6 +211,7 @@ namespace MvcBootstrap2.Controllers
         public ActionResult Delete(string id)
         {
             ViewBag.menu = MENU;
+            var courses = Course.GetCollection();
             var q = Query<Course>.EQ(x => x.Id, new ObjectId(id));
             Course course = courses.FindOne(q);
             if (course == null)
@@ -230,6 +230,7 @@ namespace MvcBootstrap2.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             ViewBag.menu = MENU;
+            var courses = Course.GetCollection();
             var q = Query<Course>.EQ(x => x.Id, new ObjectId(id));
             courses.Remove(q);
             TempData["message"] = "Course was deleted";
@@ -238,7 +239,7 @@ namespace MvcBootstrap2.Controllers
 
         private void PopulateDepartmentsDropDownList(object selectedDepartment = null)
         {
-            var departments = DbHelper.Db.GetCollection<Department>("departments");
+            var departments = Department.GetCollection();
             var l = departments.FindAll().OrderBy(x => x.Name);
             ViewBag.DepartmentID_ = new SelectList(l, "Id", "Name", selectedDepartment);
         }

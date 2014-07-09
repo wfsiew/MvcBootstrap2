@@ -18,6 +18,8 @@ namespace MvcBootstrap2.Models
 
     public class Enrollment
     {
+        private const string COLLECTION_NAME = "enrollments";
+
         public const string NO_GRADE = "No grade";
 
         public ObjectId Id { get; set; }
@@ -32,7 +34,7 @@ namespace MvcBootstrap2.Models
             get
             {
                 var q = Query<Course>.EQ(x => x.Id, CourseId);
-                var a = DbHelper.Db.GetCollection<Course>("courses");
+                var a = Course.GetCollection();
                 Course o = a.FindOne(q);
                 return o;
             }
@@ -43,10 +45,16 @@ namespace MvcBootstrap2.Models
             get
             {
                 var q = Query<Student>.EQ(x => x.Id, PersonId);
-                var a = DbHelper.Db.GetCollection<Student>("students");
+                var a = Student.GetCollection();
                 Student o = a.FindOne(q);
                 return o;
             }
+        }
+
+        public static MongoCollection<Enrollment> GetCollection()
+        {
+            MongoCollection<Enrollment> a = DbHelper.Db.GetCollection<Enrollment>(COLLECTION_NAME);
+            return a;
         }
     }
 }

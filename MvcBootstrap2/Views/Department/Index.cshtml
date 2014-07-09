@@ -1,0 +1,103 @@
+﻿@model PagedList.IPagedList<MvcBootstrap2.Models.Department>
+
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Departments";
+}
+
+<h2>Departments</h2>
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <ul class="nav">
+            <li><a href="@Url.Action("Create")"><i class="icon-plus icon-white"></i> Create New</a></li>
+        </ul>
+    </div>
+</div>
+
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-success alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        @TempData["message"]
+    </div>
+}
+
+@using (Html.BeginForm("Index", "Department", FormMethod.Get, new { @class = "form-horizontal" }))
+{
+    <div class="control-group">
+        <label class="control-label"></label>
+        <div class="controls">
+            <div class="input-append">
+                <input type="text" name="SearchString" value="@ViewBag.CurrentFilter" placeholder="Search" x-webkit-speech="x-webkit-speech" />
+                <button type="submit" class="btn btn-default"><i class="icon-search icon-white"></i></button>
+            </div>
+        </div>
+    </div>
+}
+
+<table class="table table-striped table-hover table-condensed">
+    <thead>
+        <tr class="well">
+            <th></th>
+            <th>
+                @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+            </th>
+            <th>
+                @Html.ActionLink("Budget", "Index", new { sortOrder = ViewBag.BudgetSortParm })
+            </th>
+            <th>
+                @Html.ActionLink("Start Date", "Index", new { sortOrder = ViewBag.DateSortParm })
+            </th>
+            <th>
+                @Html.ActionLink("Administrator", "Index", new { sortOrder = ViewBag.AdminSortParm })
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id.ToString() })
+                    @Html.ActionLink("Details", "Details", new { id = item.Id.ToString() })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id.ToString() })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Budget)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Administrator.FullName)
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr class="well">
+            <td colspan="5">
+			    <div class="pull-right">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+				</div>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<br />
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
+new PagedListRenderOptions
+{
+    DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded,
+    DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+    DisplayLinkToNextPage = PagedListDisplayMode.IfNeeded,
+    DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded,
+    ContainerDivClasses = new string[] { "pagination" },
+    UlElementClasses = new string[] { }
+})

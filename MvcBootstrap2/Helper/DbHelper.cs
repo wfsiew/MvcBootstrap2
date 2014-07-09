@@ -19,7 +19,7 @@ namespace MvcBootstrap2.Helper
                     var connectionString = "mongodb://localhost";
                     var client = new MongoClient(connectionString);
                     var server = client.GetServer();
-                    db = server.GetDatabase("test");
+                    db = server.GetDatabase("appdb");
                 }
 
                 return db;

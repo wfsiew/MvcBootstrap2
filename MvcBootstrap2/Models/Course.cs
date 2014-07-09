@@ -13,6 +13,8 @@ namespace MvcBootstrap2.Models
 {
     public class Course
     {
+        private const string COLLECTION_NAME = "courses";
+
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(Name = "Number")]
         public ObjectId Id { get; set; }
@@ -34,7 +36,7 @@ namespace MvcBootstrap2.Models
             get
             {
                 var q = Query<Department>.EQ(x => x.Id, DepartmentId);
-                var a = DbHelper.Db.GetCollection<Department>("departments");
+                var a = Department.GetCollection();
                 Department o = a.FindOne(q);
                 return o;
             }
@@ -45,7 +47,7 @@ namespace MvcBootstrap2.Models
             get
             {
                 var q = Query<Enrollment>.Where(x => EnrollmentIdList.Contains(x.Id));
-                var a = DbHelper.Db.GetCollection<Enrollment>("enrollments");
+                var a = Enrollment.GetCollection();
                 var b = a.Find(q);
                 List<Enrollment> l = b.ToList();
                 return l;
@@ -57,11 +59,17 @@ namespace MvcBootstrap2.Models
             get
             {
                 var q = Query<Instructor>.Where(x => InstructorIdList.Contains(x.Id));
-                var a = DbHelper.Db.GetCollection<Instructor>("instructors");
+                var a = Instructor.GetCollection();
                 var b = a.Find(q);
                 List<Instructor> l = b.ToList();
                 return l;
             }
+        }
+
+        public static MongoCollection<Course> GetCollection()
+        {
+            MongoCollection<Course> a = DbHelper.Db.GetCollection<Course>(COLLECTION_NAME);
+            return a;
         }
     }
 

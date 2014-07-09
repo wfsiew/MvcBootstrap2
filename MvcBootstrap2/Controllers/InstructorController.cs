@@ -16,12 +16,6 @@ namespace MvcBootstrap2.Controllers
     public class InstructorController : Controller
     {
         public const string MENU = "Instructor";
-        private MongoCollection<Instructor> instructors;
-
-        public InstructorController()
-        {
-            instructors = DbHelper.Db.GetCollection<Instructor>("instructors");
-        }
 
         //
         // GET: /Instructor/
@@ -48,6 +42,7 @@ namespace MvcBootstrap2.Controllers
             ViewBag.CurrentFilter = searchString;
             MongoCursor<Instructor> c = null;
             IOrderedEnumerable<Instructor> el = null;
+            var instructors = Instructor.GetCollection();
 
             //var instructors = repository.GetInstructors()
             //    .Include(i => i.OfficeAssignment)
@@ -125,6 +120,7 @@ namespace MvcBootstrap2.Controllers
         public ActionResult Details(string id)
         {
             ViewBag.menu = MENU;
+            var instructors = Instructor.GetCollection();
             var q = Query<Instructor>.EQ(x => x.Id, new ObjectId(id));
             Instructor instructor = instructors.FindOne(q);
             if (instructor == null)
@@ -168,6 +164,7 @@ namespace MvcBootstrap2.Controllers
                 else
                     o.CourseIdList = selectedCourses.Select(k => new ObjectId(k)).ToList();
 
+                var instructors = Instructor.GetCollection();
                 instructors.Insert(o);
 
                 var officeAssignments = DbHelper.Db.GetCollection<OfficeAssignment>("officeassignments");
@@ -192,6 +189,7 @@ namespace MvcBootstrap2.Controllers
         public ActionResult Edit(string id)
         {
             ViewBag.menu = MENU;
+            var instructors = Instructor.GetCollection();
             var q = Query<Instructor>.EQ(x => x.Id, new ObjectId(id));
             Instructor instructor = instructors.FindOne(q);
             if (instructor == null)
@@ -211,8 +209,8 @@ namespace MvcBootstrap2.Controllers
         public ActionResult Edit(string id, FormCollection fc, string[] selectedCourses)
         {
             ViewBag.menu = MENU;
+            var instructors = Instructor.GetCollection();
             var q = Query<Instructor>.EQ(x => x.Id, new ObjectId(id));
-
             Instructor instructorToUpdate = instructors.FindOne(q);
             InstructorModel m = new InstructorModel();
 
@@ -283,6 +281,7 @@ namespace MvcBootstrap2.Controllers
         public ActionResult Delete(string id)
         {
             ViewBag.menu = MENU;
+            var instructors = Instructor.GetCollection();
             var q = Query<Instructor>.EQ(x => x.Id, new ObjectId(id));
             Instructor instructor = instructors.FindOne(q);
             if (instructor == null)
@@ -301,6 +300,7 @@ namespace MvcBootstrap2.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             ViewBag.menu = MENU;
+            var instructors = Instructor.GetCollection();
             var q = Query<Instructor>.EQ(x => x.Id, new ObjectId(id));
             instructors.Remove(q);
             TempData["message"] = "Instructor was deleted";
@@ -317,7 +317,7 @@ namespace MvcBootstrap2.Controllers
 
         private void PopulateAssignedCourseData(Instructor instructor = null)
         {
-            MongoCursor<Course> mc = DbHelper.Db.GetCollection<Course>("courses").FindAll();
+            MongoCursor<Course> mc = Course.GetCollection().FindAll();
             List<Course> allCourses = mc.ToList();
             HashSet<ObjectId> instructorCourses = null;
 

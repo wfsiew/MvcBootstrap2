@@ -15,12 +15,6 @@ namespace MvcBootstrap2.Controllers
     public class StudentController : Controller
     {
         public const string MENU = "Student";
-        private MongoCollection<Student> students;
-
-        public StudentController()
-        {
-            students = DbHelper.Db.GetCollection<Student>("students");
-        }
 
         //
         // GET: /Student/
@@ -44,6 +38,7 @@ namespace MvcBootstrap2.Controllers
             ViewBag.CurrentFilter = searchString;
             MongoCursor<Student> c = null;
             IOrderedEnumerable<Student> el = null;
+            var students = Student.GetCollection();
 
             if (!string.IsNullOrEmpty(keyword))
             {
@@ -94,6 +89,7 @@ namespace MvcBootstrap2.Controllers
         public ActionResult Details(string id)
         {
             ViewBag.menu = MENU;
+            var students = Student.GetCollection();
             var q = Query<Student>.EQ(x => x.Id, new ObjectId(id));
             Student student = students.FindOne(q);
             if (student == null)
@@ -129,6 +125,7 @@ namespace MvcBootstrap2.Controllers
                     o.EnrollmentDate = student.EnrollmentDate;
                     o.FirstMidName = student.FirstMidName;
                     o.LastName = student.LastName;
+                    var students = Student.GetCollection();
                     students.Insert(o);
                     TempData["message"] = string.Format("{0} has been saved", o.FullName);
                     return RedirectToAction("Index");
@@ -149,6 +146,7 @@ namespace MvcBootstrap2.Controllers
         public ActionResult Edit(string id)
         {
             ViewBag.menu = MENU;
+            var students = Student.GetCollection();
             var q = Query<Student>.EQ(x => x.Id, new ObjectId(id));
             Student student = students.FindOne(q);
             if (student == null)
@@ -174,6 +172,7 @@ namespace MvcBootstrap2.Controllers
             ViewBag.menu = MENU;
             if (ModelState.IsValid)
             {
+                var students = Student.GetCollection();
                 var q = Query<Student>.EQ(x => x.Id, new ObjectId(student.Id));
                 Student o = students.FindOne(q);
                 o.EnrollmentDate = student.EnrollmentDate;
@@ -196,6 +195,7 @@ namespace MvcBootstrap2.Controllers
             if (saveChangesError.GetValueOrDefault())
                 ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists see your system administrator.";
 
+            var students = Student.GetCollection();
             var q = Query<Student>.EQ(x => x.Id, new ObjectId(id));
             Student student = students.FindOne(q);
             if (student == null)
@@ -216,6 +216,7 @@ namespace MvcBootstrap2.Controllers
             ViewBag.menu = MENU;
             try
             {
+                var students = Student.GetCollection();
                 var q = Query<Student>.EQ(x => x.Id, new ObjectId(id));
                 students.Remove(q);
                 TempData["message"] = "Student was deleted";
