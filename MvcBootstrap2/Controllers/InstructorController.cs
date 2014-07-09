@@ -329,7 +329,7 @@ namespace MvcBootstrap2.Controllers
             {
                 viewModel.Add(new AssignedCourseData
                 {
-                    CourseID = course.Id,
+                    CourseID = course.CourseID,
                     Title = course.Title,
                     Assigned = instructor == null ? false : instructorCourses.Contains(course.Id)
                 });
