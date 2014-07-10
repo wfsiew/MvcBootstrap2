@@ -988,7 +988,7 @@ function DepartmentCtrl($scope, $http, Page, Menu) {
         var list = $scope.model;
         var lx = _.where(list, { selected: true });
         var departments = _.map(lx, function (o) {
-            return { DepartmentId: o.DepartmentId, RowVersion: o.RowVersion };
+            return { Id: o.Id, RowVersion: o.RowVersion }
         });
         $http.post('/Ng/Department/Delete', { departments: departments }).success(function (data) {
             if (data.success == 1) {
@@ -1007,7 +1007,7 @@ function DepartmentCtrl($scope, $http, Page, Menu) {
     }
 
     $scope.removeItem = function (o) {
-        var departments = [{ DepartmentId: o.DepartmentId, RowVersion: o.RowVersion }];
+        var departments = [{ Id: o.Id, RowVersion: o.RowVersion }];
         $http.post('/Ng/Department/Delete', { departments: departments }).success(function (data) {
             if (data.success == 1) {
                 Page.setMessage(data.message);
@@ -1043,7 +1043,7 @@ function DepartmentCreateCtrl($scope, $http, $timeout, Page, Menu) {
             Name: $scope.model.Name,
             Budget: $scope.model.Budget,
             StartDate: utils.getDateStr($scope.model.StartDate),
-            PersonID: $scope.model.PersonID
+            PersonId: $scope.model.PersonId
         };
 
         $http.post('/Ng/Department/Create', o).success(function (data) {
@@ -1070,7 +1070,7 @@ function DepartmentCreateCtrl($scope, $http, $timeout, Page, Menu) {
     }
 
     $http.get('/Ng/Department/Instructors').success(function (data) {
-        $scope.PersonIDList = data;
+        $scope.PersonIdList = data;
     });
 }
 
@@ -1084,17 +1084,17 @@ function DepartmentEditCtrl($scope, $http, $routeParams, $timeout, Page, Menu) {
     $http.get('/Ng/Department/Edit/' + $routeParams.id).success(function (data) {
         $scope.model = data;
         $scope.model.StartDate = utils.getDate(data.StartDate);
-        $scope.PersonIDList = data.PersonIDList;
+        $scope.PersonIdList = data.PersonIdList;
     });
 
     $scope.save = function () {
         var o = {
-            DepartmentID: $scope.model.DepartmentID,
+            Id: $scope.model.Id,
             RowVersion: $scope.model.RowVersion,
             Name: $scope.model.Name,
             Budget: $scope.model.Budget,
             StartDate: utils.getDateStr($scope.model.StartDate),
-            PersonID: $scope.model.PersonID
+            PersonId: $scope.model.PersonId
         };
 
         $http.post('/Ng/Department/Edit', o).success(function (data) {

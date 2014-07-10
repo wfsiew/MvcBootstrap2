@@ -197,6 +197,7 @@ namespace MvcBootstrap2.Controllers
                     o.PersonId = new ObjectId(department.PersonId);
                     o.RowVersion = department.RowVersion;
                     o.StartDate = department.StartDate;
+                    departments.Save(o);
                     TempData["message"] = string.Format("{0} has been saved", o.Name);
                     return RedirectToAction("Index");
                 }
