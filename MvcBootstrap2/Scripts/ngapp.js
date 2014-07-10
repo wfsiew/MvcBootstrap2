@@ -2,7 +2,7 @@
 
 /* App Module */
 
-var app = angular.module('mvcapp', ['mvcappFilters', 'ui.bootstrap', 'ui.utils']);
+var app = angular.module('mvcapp', ['mvcappFilters', 'ui.bootstrap', 'ui.utils', 'ngRoute', 'ngSanitize', 'chieffancypants.loadingBar', 'ngAnimate']);
 
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.

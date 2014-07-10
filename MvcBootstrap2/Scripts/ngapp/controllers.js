@@ -729,7 +729,7 @@ function InstructorCtrl($scope, $http, $timeout, Page, Menu) {
     }
 
     $scope.selectCourse = function (x) {
-        $http.get('/Ng/Instructor/Enrollments', { params: { id: x.Id, courseID: x.Id } }).success(function(data) {
+        $http.get('/Ng/Instructor/Enrollments', { params: { id: x.PersonID, courseID: x.Id } }).success(function(data) {
             if ($scope.course != null)
                 $scope.course.select = false;
 

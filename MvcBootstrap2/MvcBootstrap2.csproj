@@ -97,6 +97,7 @@
     <Content Include="Content\css\bootstrap-theme.min.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\loading-bar.css" />
     <Content Include="Content\img\favicon.png" />
     <Content Include="Content\img\glyphicons-halflings-white.png" />
     <Content Include="Content\img\glyphicons-halflings.png" />
@@ -175,6 +176,9 @@
     <Content Include="ngview\student\details.html" />
     <Content Include="ngview\student\form.html" />
     <Content Include="ngview\student\index.html" />
+    <Content Include="Scripts\angular-animate.min.js" />
+    <Content Include="Scripts\angular-route.min.js" />
+    <Content Include="Scripts\angular-sanitize.min.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -182,6 +186,10 @@
     <Content Include="Scripts\html5shiv.js" />
     <Content Include="Areas\Ng\Views\web.config" />
     <Content Include="Areas\Ng\Views\Ng\Index.cshtml" />
+    <Content Include="Scripts\angular-animate.min.js.map" />
+    <Content Include="Scripts\angular-route.min.js.map" />
+    <Content Include="Scripts\angular-sanitize.min.js.map" />
+    <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -200,14 +208,14 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\loading-bar.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\ngapp.js" />
     <Content Include="Scripts\ngapp\controllers.js" />
     <Content Include="Scripts\ngapp\filters.js" />
     <Content Include="Scripts\ngapp\utils.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\ui-bootstrap-0.6.0.min.js" />
-    <Content Include="Scripts\ui-bootstrap-tpls-0.6.0.min.js" />
+    <Content Include="Scripts\ui-bootstrap-tpls-0.8.0.min.js" />
     <Content Include="Scripts\ui-utils.min.js" />
     <Content Include="Scripts\underscore-min.js" />
     <None Include="Scripts\_references.js" />

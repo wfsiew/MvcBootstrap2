@@ -43,13 +43,13 @@ namespace MvcBootstrap2.Controllers
 
             if (!string.IsNullOrEmpty(keyword))
             {
-                var qi = Query<Instructor>.Where(x => x.FirstMidName.Contains(keyword) ||
-                    x.LastName.Contains(keyword));
+                var qi = Query<Instructor>.Where(x => x.FirstMidName.ToUpper().Contains(keyword) ||
+                    x.LastName.ToUpper().Contains(keyword));
                 var instructors = DbHelper.Db.GetCollection<Instructor>("instructors");
                 var i = instructors.Find(qi);
                 var iid = i.Select(x => x.Id);
 
-                var q = Query<Department>.Where(x => x.Name.Contains(keyword) ||
+                var q = Query<Department>.Where(x => x.Name.ToUpper().Contains(keyword) ||
                     iid.Contains(x.PersonId));
                 c = departments.Find(q);
             }

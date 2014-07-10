@@ -2,7 +2,7 @@
 
 /* App Module */
 
-angular.module('mvcapp', ['ui.bootstrap']).
+angular.module('mvcapp', ['ngRoute', 'ngSanitize', 'ui.bootstrap']).
     config(['$routeProvider', function ($routeProvider) {
 
     }]);
