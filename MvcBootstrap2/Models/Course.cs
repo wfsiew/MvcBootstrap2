@@ -48,6 +48,9 @@ namespace MvcBootstrap2.Models
         {
             get
             {
+                if (EnrollmentIdList == null)
+                    return new List<Enrollment>();
+
                 var q = Query<Enrollment>.Where(x => EnrollmentIdList.Contains(x.Id));
                 var a = Enrollment.GetCollection();
                 var b = a.Find(q);
@@ -60,6 +63,9 @@ namespace MvcBootstrap2.Models
         {
             get
             {
+                if (InstructorIdList == null)
+                    return new List<Instructor>();
+
                 var q = Query<Instructor>.Where(x => InstructorIdList.Contains(x.Id));
                 var a = Instructor.GetCollection();
                 var b = a.Find(q);

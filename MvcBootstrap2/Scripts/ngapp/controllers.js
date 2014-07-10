@@ -241,7 +241,7 @@ function StudentEditCtrl($scope, $http, $routeParams, $timeout, Page, Menu) {
 
     $scope.save = function () {
         var o = {
-            PersonID: $scope.model.PersonID,
+            Id: $scope.model.Id,
             LastName: $scope.model.LastName,
             FirstMidName: $scope.model.FirstMidName,
             EnrollmentDate: utils.getDateStr($scope.model.EnrollmentDate)
@@ -415,7 +415,7 @@ function CourseCtrl($scope, $http, Page, Menu) {
         var list = $scope.model;
         var lx = _.where(list, { selected: true });
         var ids = _.map(lx, function (o) {
-            return o.CourseID;
+            return o.Id;
         });
         $http.post('/Ng/Course/Delete', { ids: ids }).success(function (data) {
             if (data.success == 1) {
@@ -434,7 +434,7 @@ function CourseCtrl($scope, $http, Page, Menu) {
     }
 
     $scope.removeItem = function (o) {
-        var ids = [o.CourseID];
+        var ids = [o.Id];
         $http.post('/Ng/Course/Delete', { ids: ids }).success(function (data) {
             if (data.success == 1) {
                 Page.setMessage(data.message);
@@ -470,7 +470,7 @@ function CourseCreateCtrl($scope, $http, Page, Menu) {
             CourseID: $scope.model.CourseID,
             Title: $scope.model.Title,
             Credits: $scope.model.Credits,
-            DepartmentID: $scope.model.DepartmentID
+            DepartmentId: $scope.model.DepartmentId
         };
 
         $http.post('/Ng/Course/Create', o).success(function (data) {
@@ -491,7 +491,7 @@ function CourseCreateCtrl($scope, $http, Page, Menu) {
     }
 
     $http.get('/Ng/Course/Departments').success(function (data) {
-        $scope.DepartmentIDList = data;
+        $scope.DepartmentIdList = data;
     });
 }
 
@@ -505,7 +505,7 @@ function CourseEditCtrl($scope, $http, $routeParams, $timeout, Page, Menu) {
     $http.get('/Ng/Course/Edit/' + $routeParams.id).success(function (data) {
         $scope.model = data;
         $scope.model.StartDate = utils.getDate(data.StartDate);
-        $scope.DepartmentIDList = data.DepartmentIDList;
+        $scope.DepartmentIdList = data.DepartmentIdList;
     });
 
     $scope.save = function () {
@@ -513,7 +513,7 @@ function CourseEditCtrl($scope, $http, $routeParams, $timeout, Page, Menu) {
             CourseID: $scope.model.CourseID,
             Title: $scope.model.Title,
             Credits: $scope.model.Credits,
-            DepartmentID: $scope.model.DepartmentID
+            DepartmentId: $scope.model.DepartmentId
         };
 
         $http.post('/Ng/Course/Edit', o).success(function (data) {
@@ -680,7 +680,7 @@ function InstructorCtrl($scope, $http, $timeout, Page, Menu) {
         var list = $scope.model;
         var lx = _.where(list, { selected: true });
         var ids = _.map(lx, function (o) {
-            return o.PersonID;
+            return o.Id;
         });
         $http.post('/Ng/Instructor/Delete', { ids: ids }).success(function (data) {
             if (data.success == 1) {
@@ -699,7 +699,7 @@ function InstructorCtrl($scope, $http, $timeout, Page, Menu) {
     }
 
     $scope.removeItem = function (o) {
-        var ids = [o.PersonID];
+        var ids = [o.Id];
         $http.post('/Ng/Instructor/Delete', { ids: ids }).success(function (data) {
             if (data.success == 1) {
                 Page.setMessage(data.message);
@@ -717,7 +717,7 @@ function InstructorCtrl($scope, $http, $timeout, Page, Menu) {
     }
 
     $scope.selectInstructor = function (o) {
-        $http.get('/Ng/Instructor/Courses', { params: { id: o.PersonID } }).success(function (data) {
+        $http.get('/Ng/Instructor/Courses', { params: { id: o.Id } }).success(function (data) {
             $scope.enrollments = null;
             if ($scope.instructor != null)
                 $scope.instructor.select = false;
@@ -729,7 +729,7 @@ function InstructorCtrl($scope, $http, $timeout, Page, Menu) {
     }
 
     $scope.selectCourse = function (x) {
-        $http.get('/Ng/Instructor/Enrollments', { params: { id: x.PersonID, courseID: x.CourseID } }).success(function(data) {
+        $http.get('/Ng/Instructor/Enrollments', { params: { id: x.Id, courseID: x.Id } }).success(function(data) {
             if ($scope.course != null)
                 $scope.course.select = false;
 
@@ -756,15 +756,14 @@ function InstructorCreateCtrl($scope, $http, Page, Menu) {
     $scope.save = function () {
         var _selectedCourses = _.where($scope.Courses, { Assigned: true });
         var selectedCourses = _.map(_selectedCourses, function (o) {
-            return o.CourseID;
+            return o.CourseId;
         });
         var o = {
             LastName: $scope.model.LastName,
             FirstMidName: $scope.model.FirstMidName,
             HireDate: utils.getDateStr($scope.model.HireDate),
             'OfficeAssignment.Location': $scope.model.OfficeAssignment.Location,
-            selectedCourses: selectedCourses,
-            PersonID: $scope.model.PersonID
+            selectedCourses: selectedCourses
         };
 
         $http.post('/Ng/Instructor/Create', o).success(function (data) {
@@ -811,7 +810,7 @@ function InstructorEditCtrl($scope, $http, $routeParams, $timeout, Page, Menu) {
     $scope.save = function () {
         var _selectedCourses = _.where($scope.Courses, { Assigned: true });
         var selectedCourses = _.map(_selectedCourses, function (o) {
-            return o.CourseID;
+            return o.CourseId;
         });
         var o = {
             LastName: $scope.model.LastName,
@@ -819,7 +818,7 @@ function InstructorEditCtrl($scope, $http, $routeParams, $timeout, Page, Menu) {
             HireDate: utils.getDateStr($scope.model.HireDate),
             'OfficeAssignment.Location': $scope.model.OfficeAssignment.Location,
             selectedCourses: selectedCourses,
-            PersonID: $scope.model.PersonID
+            Id: $scope.model.Id
         };
 
         $http.post('/Ng/Instructor/Edit/' + $routeParams.id, o).success(function (data) {
@@ -989,7 +988,7 @@ function DepartmentCtrl($scope, $http, Page, Menu) {
         var list = $scope.model;
         var lx = _.where(list, { selected: true });
         var departments = _.map(lx, function (o) {
-            return { DepartmentID: o.DepartmentID, RowVersion: o.RowVersion };
+            return { DepartmentId: o.DepartmentId, RowVersion: o.RowVersion };
         });
         $http.post('/Ng/Department/Delete', { departments: departments }).success(function (data) {
             if (data.success == 1) {
@@ -1008,7 +1007,7 @@ function DepartmentCtrl($scope, $http, Page, Menu) {
     }
 
     $scope.removeItem = function (o) {
-        var departments = [{ DepartmentID: o.DepartmentID, RowVersion: o.RowVersion }];
+        var departments = [{ DepartmentId: o.DepartmentId, RowVersion: o.RowVersion }];
         $http.post('/Ng/Department/Delete', { departments: departments }).success(function (data) {
             if (data.success == 1) {
                 Page.setMessage(data.message);

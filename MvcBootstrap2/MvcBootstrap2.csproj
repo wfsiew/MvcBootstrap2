@@ -158,11 +158,30 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="ngview\course\details.html" />
+    <Content Include="ngview\course\form.html" />
+    <Content Include="ngview\course\index.html" />
+    <Content Include="ngview\department\details.html" />
+    <Content Include="ngview\department\form.html" />
+    <Content Include="ngview\department\index.html" />
+    <Content Include="ngview\home\about.html" />
+    <Content Include="ngview\home\index.html" />
+    <Content Include="ngview\instructor\details.html" />
+    <Content Include="ngview\instructor\form.html" />
+    <Content Include="ngview\instructor\index.html" />
+    <Content Include="ngview\shared\alert.html" />
+    <Content Include="ngview\shared\info.html" />
+    <Content Include="ngview\shared\success.html" />
+    <Content Include="ngview\student\details.html" />
+    <Content Include="ngview\student\form.html" />
+    <Content Include="ngview\student\index.html" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\html5shiv.js" />
+    <Content Include="Areas\Ng\Views\web.config" />
+    <Content Include="Areas\Ng\Views\Ng\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -206,6 +225,12 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Ng\Controllers\CourseController.cs" />
+    <Compile Include="Areas\Ng\Controllers\DepartmentController.cs" />
+    <Compile Include="Areas\Ng\Controllers\InstructorController.cs" />
+    <Compile Include="Areas\Ng\Controllers\NgController.cs" />
+    <Compile Include="Areas\Ng\Controllers\StudentController.cs" />
+    <Compile Include="Areas\Ng\NgAreaRegistration.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -223,6 +248,7 @@
     <Compile Include="Models\Enrollment.cs" />
     <Compile Include="Models\Instructor.cs" />
     <Compile Include="Models\OfficeAssignment.cs" />
+    <Compile Include="Models\Pager.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -263,6 +289,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Ng\Models\" />
+    <Folder Include="Areas\Ng\Views\Course\" />
+    <Folder Include="Areas\Ng\Views\Department\" />
+    <Folder Include="Areas\Ng\Views\Instructor\" />
+    <Folder Include="Areas\Ng\Views\Shared\" />
+    <Folder Include="Areas\Ng\Views\Student\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

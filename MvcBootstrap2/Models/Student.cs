@@ -26,6 +26,9 @@ namespace MvcBootstrap2.Models
         {
             get
             {
+                if (EnrollmentIdList == null)
+                    return new List<Enrollment>();
+
                 var q = Query<Enrollment>.Where(x => EnrollmentIdList.Contains(x.Id));
                 var a = Enrollment.GetCollection();
                 var b = a.Find(q);

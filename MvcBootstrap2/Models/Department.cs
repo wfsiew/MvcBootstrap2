@@ -50,6 +50,9 @@ namespace MvcBootstrap2.Models
         {
             get
             {
+                if (CourseIdList == null)
+                    return new List<Course>();
+
                 var q = Query<Course>.Where(x => CourseIdList.Contains(x.Id));
                 var a = Course.GetCollection();
                 var b = a.Find(q);

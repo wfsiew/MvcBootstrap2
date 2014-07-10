@@ -1,0 +1,68 @@
+﻿<h2>{{title}}</h2>
+
+<div class="well">
+    <form name="form" method="post" class="form-horizontal">
+        <ng-include src="'ngview/shared/alert.html'"></ng-include>
+
+        <fieldset>
+            <legend>Course</legend>
+
+            <div class="control-group">
+                <label class="control-label">Number</label>
+                <div class="controls">
+                    <input id="CourseID" type="text" value="" placeholder="Number" name="CourseID" 
+                        x-webkit-speech="x-webkit-speech"
+                        ng-model="model.CourseID"
+                        required
+                        ng-pattern=/^\d+$/>
+                    <span class="label label-important" ng-show="form.CourseID.$error.required">The Number field is required.</span>
+                    <span class="label label-important" ng-show="form.CourseID.$error.pattern">The field Number must be a number.</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Title</label>
+                <div class="controls">
+                    <input id="Title" type="text" value="" placeholder="Title" name="Title" 
+                        x-webkit-speech="x-webkit-speech" 
+                        ng-model="model.Title"
+                        ng-minlength="3"
+                        ng-maxlength="50">
+                    <span class="label label-important" ng-show="form.Title.$error.minlength || form.Title.$error.maxlength">The field Title must be a string with a minimum length of 3 and a maximum length of 50.</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Credits</label>
+                <div class="controls">
+                    <input id="Credits" type="number" value="" placeholder="Credits" name="Credits" 
+                        x-webkit-speech="x-webkit-speech"
+                        ng-model="model.Credits"
+                        required
+                        ng-pattern=/^\d+$/
+                        min="0"
+                        max="5">
+                    <span class="label label-important" ng-show="form.Credits.$error.required">The Credits field is required.</span>
+                    <span class="label label-important" ng-show="form.Credits.$error.pattern">The field Credits must be a number.</span>
+                    <span class="label label-important" ng-show="form.Credits.$error.min || form.Credits.$error.max">The field Credits must be between 0 and 5.</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Department</label>
+                <div class="controls">
+                    <select id="DepartmentId" name="DepartmentId" 
+                        ng-model="model.DepartmentId"
+                        required>
+                        <option value></option>
+                        <option ng-repeat="o in DepartmentIdList" value="{{o.DepartmentId}}" ng-selected="o.DepartmentId == model.DepartmentId">{{o.Name}}</option>
+                    </select>
+                    <span class="label label-important" ng-show="form.DepartmentID.$error.required">The Department field is required.</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button type="button" class="btn btn-primary" ng-click="save()"><i class="icon-ok icon-white"></i> {{action}}</button>
+                    <a class="btn btn-default" href="#/courses"><i class="icon-arrow-left icon-white"></i> Cancel</a>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

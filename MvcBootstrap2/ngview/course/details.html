@@ -1,0 +1,43 @@
+﻿<h2>Details</h2>
+
+<div class="well">
+    <form class="form-horizontal" role="form">
+        <fieldset>
+            <legend>Course</legend>
+
+            <div class="control-group">
+                <label class="control-label">Number</label>
+                <div class="controls">
+                    {{model.CourseID}}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Title</label>
+                <div class="controls">
+                    {{model.Title}}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Credits</label>
+                <div class="controls">
+                    {{model.Credits}}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Name</label>
+                <div class="controls">
+                    {{model.Department.Name}}
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <ul class="nav">
+            <li><a href="#/courses/edit/{{model.CourseID}}"><i class="icon-pencil icon-white"></i> Edit</a></li>
+            <li><a href="#/courses"><i class="icon-arrow-left icon-white"></i> Back to List</a></li>
+        </ul>
+    </div>
+</div>

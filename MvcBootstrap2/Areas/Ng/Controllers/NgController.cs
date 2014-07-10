@@ -10,23 +10,14 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 
-namespace MvcBootstrap2.Controllers
+namespace MvcBootstrap2.Areas.Ng.Controllers
 {
-    public class HomeController : Controller
+    public class NgController : Controller
     {
-        public const string MENU = "Home";
-        private MongoCollection<Student> students;
-
-        public HomeController()
-        {
-            students = DbHelper.Db.GetCollection<Student>("students");
-        }
-
         //
-        // GET: /Home/
+        // GET: /Ng/Ng/
         public ActionResult Index()
         {
-            ViewBag.menu = MENU;
             return View();
         }
 
@@ -45,7 +36,7 @@ namespace MvcBootstrap2.Controllers
                 v.Add(o);
             }
 
-            return View(v);
+            return Json(v, JsonRequestBehavior.AllowGet);
         }
 	}
 }
