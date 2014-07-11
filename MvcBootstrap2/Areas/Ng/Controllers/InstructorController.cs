@@ -40,6 +40,8 @@ namespace MvcBootstrap2.Areas.Ng.Controllers
             else
                 c = instructors.FindAll();
 
+            int count = Convert.ToInt32(c.Count());
+
             switch (sortOrder)
             {
                 case "Name_desc":
@@ -77,8 +79,9 @@ namespace MvcBootstrap2.Areas.Ng.Controllers
 
             int pageSize = Constants.PAGE_SIZE;
             int pageNumber = (page ?? 1);
+            Pager pager = new Pager(count, pageNumber, pageSize);
 
-            var l = el.ToPagedList(pageNumber, pageSize);
+            var l = el.Skip(pager.LowerBound).Take(pager.PageSize);
             var lx = l.Select(x => new
             {
                 Id = x.Id.ToString(),
@@ -88,7 +91,7 @@ namespace MvcBootstrap2.Areas.Ng.Controllers
                 OfficeAssignment = new { Location = x.OfficeAssignment == null ? null : x.OfficeAssignment.Location },
                 Courses = x.Courses == null ? null : x.Courses.Select(k => new { CourseID = k.CourseID, Title = k.Title })
             });
-            Pager pager = new Pager(l.TotalItemCount, l.PageNumber, l.PageSize);
+            
             Dictionary<string, object> res = new Dictionary<string, object>
             {
                 { "pager", pager },

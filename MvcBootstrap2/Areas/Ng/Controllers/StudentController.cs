@@ -37,6 +37,8 @@ namespace MvcBootstrap2.Areas.Ng.Controllers
             else
                 c = students.FindAll();
 
+            int count = Convert.ToInt32(c.Count());
+
             switch (sortOrder)
             {
                 case "Name_desc":
@@ -66,8 +68,9 @@ namespace MvcBootstrap2.Areas.Ng.Controllers
 
             int pageSize = Constants.PAGE_SIZE;
             int pageNumber = (page ?? 1);
+            Pager pager = new Pager(count, pageNumber, pageSize);
 
-            var l = el.ToPagedList(pageNumber, pageSize);
+            var l = el.Skip(pager.LowerBound).Take(pager.PageSize);
             var lx = l.Select(x => new
             {
                 EnrollmentDate = x.EnrollmentDate,
@@ -75,7 +78,7 @@ namespace MvcBootstrap2.Areas.Ng.Controllers
                 LastName = x.LastName,
                 PersonID = x.Id.ToString()
             });
-            Pager pager = new Pager(l.TotalItemCount, l.PageNumber, l.PageSize);
+
             Dictionary<string, object> res = new Dictionary<string, object>
             {
                 { "pager", pager },
