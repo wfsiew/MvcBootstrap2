@@ -8,6 +8,7 @@ using MvcBootstrap2.Helper;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
+using FizzWare.NBuilder;
 
 namespace MvcBootstrap2.Controllers
 {
@@ -246,6 +247,31 @@ namespace MvcBootstrap2.Controllers
             }
 
             return View();
+        }
+
+        public ActionResult Test()
+        {
+            var students = Student.GetCollection();
+            var ls = Builder<Student>.CreateListOfSize(500).Build();
+            students.InsertBatch(ls);
+
+            var instructors = Instructor.GetCollection();
+            var li = Builder<Instructor>.CreateListOfSize(500).Build();
+            instructors.InsertBatch(li);
+
+            var departments = Department.GetCollection();
+            var ld = Builder<Department>.CreateListOfSize(500).Build();
+            departments.InsertBatch(ld);
+
+            var courses = Course.GetCollection();
+            var lc = Builder<Course>.CreateListOfSize(500).Build();
+            courses.InsertBatch(lc);
+
+            var enrollments = Enrollment.GetCollection();
+            var le = Builder<Enrollment>.CreateListOfSize(500).Build();
+            enrollments.InsertBatch(le);
+
+            return View("Index");
         }
 
         private void AddOrUpdateInstructor(string courseTitle, string instructorName)
