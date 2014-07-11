@@ -82,7 +82,7 @@ namespace MvcBootstrap2.Areas.Ng.Controllers
 
             int pageSize = Constants.PAGE_SIZE;
             int pageNumber = (page ?? 1);
-            Pager pager = new Pager(count, pageNumber, pager.PageSize);
+            Pager pager = new Pager(count, pageNumber, pageSize);
 
             var l = el.Skip(pager.LowerBound).Take(pager.PageSize);
             var lx = l.Select(x => new

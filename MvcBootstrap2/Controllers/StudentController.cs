@@ -50,8 +50,6 @@ namespace MvcBootstrap2.Controllers
             else
                 c = students.FindAll();
 
-            int count = Convert.ToInt32(c.Count());
-
             switch (sortOrder)
             {
                 case "Name_desc":
@@ -81,11 +79,8 @@ namespace MvcBootstrap2.Controllers
 
             int pageSize = Constants.PAGE_SIZE;
             int pageNumber = (page ?? 1);
-            Pager pager = new Pager(count, pageNumber, pageSize);
-            IEnumerable<Student> l = el.Skip(pager.LowerBound).Take(pager.PageSize);
-            ViewBag.Pager = pager;
 
-            return View(l);
+            return View(el.ToPagedList(pageNumber, pageSize));
         }
 
         //
