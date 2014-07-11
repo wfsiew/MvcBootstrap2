@@ -108,7 +108,7 @@ function StudentCtrl($scope, $http, Page, Menu) {
     $scope.selectRow = function ($event, o) {
         $event.stopPropagation();
 
-        if (o.selected)
+        if (!o.selected)
             ++$scope.selected.count;
 
         else
@@ -129,10 +129,10 @@ function StudentCtrl($scope, $http, Page, Menu) {
 
         for (var i = 0; i < n; i++) {
             var o = list[i];
-            o.selected = $scope.selected.all;
+            o.selected = !$scope.selected.all;
         }
 
-        if ($scope.selected.all)
+        if (!$scope.selected.all)
             $scope.selected.count = n;
 
         else
@@ -377,7 +377,7 @@ function CourseCtrl($scope, $http, Page, Menu) {
     $scope.selectRow = function ($event, o) {
         $event.stopPropagation();
 
-        if (o.selected)
+        if (!o.selected)
             ++$scope.selected.count;
 
         else
@@ -398,10 +398,10 @@ function CourseCtrl($scope, $http, Page, Menu) {
 
         for (var i = 0; i < n; i++) {
             var o = list[i];
-            o.selected = $scope.selected.all;
+            o.selected = !$scope.selected.all;
         }
 
-        if ($scope.selected.all)
+        if (!$scope.selected.all)
             $scope.selected.count = n;
 
         else
@@ -642,7 +642,7 @@ function InstructorCtrl($scope, $http, $timeout, Page, Menu) {
     $scope.selectRow = function ($event, o) {
         $event.stopPropagation();
 
-        if (o.selected)
+        if (!o.selected)
             ++$scope.selected.count;
 
         else
@@ -663,10 +663,10 @@ function InstructorCtrl($scope, $http, $timeout, Page, Menu) {
 
         for (var i = 0; i < n; i++) {
             var o = list[i];
-            o.selected = $scope.selected.all;
+            o.selected = !$scope.selected.all;
         }
 
-        if ($scope.selected.all)
+        if (!$scope.selected.all)
             $scope.selected.count = n;
 
         else
@@ -950,7 +950,7 @@ function DepartmentCtrl($scope, $http, Page, Menu) {
     $scope.selectRow = function ($event, o) {
         $event.stopPropagation();
 
-        if (o.selected)
+        if (!o.selected)
             ++$scope.selected.count;
 
         else
@@ -971,10 +971,10 @@ function DepartmentCtrl($scope, $http, Page, Menu) {
 
         for (var i = 0; i < n; i++) {
             var o = list[i];
-            o.selected = $scope.selected.all;
+            o.selected = !$scope.selected.all;
         }
 
-        if ($scope.selected.all)
+        if (!$scope.selected.all)
             $scope.selected.count = n;
 
         else
