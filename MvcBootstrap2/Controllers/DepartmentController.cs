@@ -385,6 +385,8 @@ namespace MvcBootstrap2.Controllers
             report.TextFields.Title = "Departments Report";
             report.TextFields.Header = string.Format(@"Report Generated: {0} Total Departments: {1}", DateTime.Now, c.Count());
 
+            report.DataFields["StartDate"].DataFormatString = "{0:M/d/yyyy}";
+
             report.RenderHints.FreezeRows = 4;
 
             report.RenderingRow += report_RenderingRow;
