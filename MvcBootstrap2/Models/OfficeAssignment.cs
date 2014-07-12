@@ -40,5 +40,10 @@ namespace MvcBootstrap2.Models
             MongoCollection<OfficeAssignment> a = DbHelper.Db.GetCollection<OfficeAssignment>(COLLECTION_NAME);
             return a;
         }
+
+        public override string ToString()
+        {
+            return Location;
+        }
     }
 }

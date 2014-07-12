@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Text;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MongoDB.Bson;
@@ -52,6 +53,24 @@ namespace MvcBootstrap2.Models
         {
             MongoCollection<Instructor> a = DbHelper.Db.GetCollection<Instructor>(COLLECTION_NAME);
             return a;
+        }
+
+        public string GetCourses()
+        {
+            IEnumerable<Course> l = Courses;
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < l.Count(); i++)
+            {
+                Course o = l.ElementAt(i);
+                string s = string.Format("{0} {1}", o.CourseID, o.Title);
+                if (i < l.Count() - 1)
+                    sb.AppendLine(s);
+
+                else
+                    sb.Append(s);
+            }
+
+            return sb.ToString();
         }
     }
 

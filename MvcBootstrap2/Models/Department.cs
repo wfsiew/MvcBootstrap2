@@ -66,6 +66,11 @@ namespace MvcBootstrap2.Models
             MongoCollection<Department> a = DbHelper.Db.GetCollection<Department>(COLLECTION_NAME);
             return a;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     public class DepartmentModel

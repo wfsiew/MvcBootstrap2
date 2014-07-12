@@ -9,6 +9,8 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using PagedList;
+using DoddleReport;
+using DoddleReport.Web;
 
 namespace MvcBootstrap2.Controllers
 {
@@ -269,12 +271,129 @@ namespace MvcBootstrap2.Controllers
             }
         }
 
+        public ActionResult HtmlReport(string sortOrder, string currentFilter, string searchString)
+        {
+            Report report = GetReport(sortOrder, currentFilter, searchString);
+            return new ReportResult(report);
+        }
+
+        public ActionResult PdfReport(string sortOrder, string currentFilter, string searchString)
+        {
+            Report report = GetReport(sortOrder, currentFilter, searchString);
+            return new ReportResult(report, new DoddleReport.iTextSharp.PdfReportWriter(), "application/pdf");
+        }
+
+        public ActionResult ExcelReport(string sortOrder, string currentFilter, string searchString)
+        {
+            var report = GetReport(sortOrder, currentFilter, searchString);
+            return new ReportResult(report, new DoddleReport.OpenXml.ExcelReportWriter(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        }
+
+        public ActionResult CsvReport(string sortOrder, string currentFilter, string searchString)
+        {
+            var report = GetReport(sortOrder, currentFilter, searchString);
+            return new ReportResult(report, new DoddleReport.Writers.DelimitedTextReportWriter(), "text/plain;charset=UTF-8");
+        }
+
         private void PopulateInstructorsDropDownList(object selectedInstructor = null)
         {
             var instructors = Instructor.GetCollection();
             var c = instructors.FindAll();
             var instructorsQuery = c.OrderBy(x => x.LastName);
             ViewBag.PersonID_ = new SelectList(instructorsQuery, "Id", "FullName", selectedInstructor);
+        }
+
+        private Report GetReport(string sortOrder, string currentFilter, string searchString)
+        {
+            ViewBag.menu = MENU;
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+            ViewBag.BudgetSortParm = sortOrder == "Budget" ? "Budget_desc" : "Budget";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "Date_desc" : "Date";
+            ViewBag.AdminSortParm = sortOrder == "Admin" ? "Admin_desc" : "Admin";
+
+            if (searchString == null)
+                searchString = currentFilter;
+
+            string keyword = string.IsNullOrEmpty(searchString) ? null : searchString.ToUpper();
+
+            ViewBag.CurrentFilter = searchString;
+            MongoCursor<Department> c = null;
+            IOrderedEnumerable<Department> el = null;
+            var departments = Department.GetCollection();
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                var qi = Query<Instructor>.Where(x => x.FirstMidName.ToUpper().Contains(keyword) ||
+                    x.LastName.ToUpper().Contains(keyword));
+                var instructors = DbHelper.Db.GetCollection<Instructor>("instructors");
+                var i = instructors.Find(qi);
+                var iid = i.Select(x => x.Id);
+
+                var q = Query<Department>.Where(x => x.Name.ToUpper().Contains(keyword) ||
+                    iid.Contains(x.PersonId));
+                c = departments.Find(q);
+            }
+
+            else
+                c = departments.FindAll();
+
+            switch (sortOrder)
+            {
+                case "Name_desc":
+                    el = c.OrderByDescending(x => x.Name);
+                    break;
+
+                case "Budget":
+                    el = c.OrderBy(x => x.Budget);
+                    break;
+
+                case "Budget_desc":
+                    el = c.OrderByDescending(x => x.Budget);
+                    break;
+
+                case "Date":
+                    el = c.OrderBy(x => x.StartDate);
+                    break;
+
+                case "Date_desc":
+                    el = c.OrderByDescending(x => x.StartDate);
+                    break;
+
+                case "Admin":
+                    el = c.OrderBy(x => x.Administrator.LastName);
+                    break;
+
+                case "Admin_desc":
+                    el = c.OrderByDescending(x => x.Administrator.LastName);
+                    break;
+
+                default:
+                    el = c.OrderBy(x => x.Name);
+                    break;
+            }
+
+            var lr = el.Select(x => new
+            {
+                Name = x.Name,
+                Budget = x.Budget,
+                StartDate = x.StartDate,
+                Administrator = x.Administrator
+            });
+
+            Report report = new Report(lr.ToReportSource());
+            report.TextFields.Title = "Departments Report";
+            report.TextFields.Header = string.Format(@"Report Generated: {0} Total Departments: {1}", DateTime.Now, c.Count());
+
+            report.RenderHints.FreezeRows = 4;
+
+            report.RenderingRow += report_RenderingRow;
+
+            return report;
+        }
+
+        private void report_RenderingRow(object sender, ReportRowEventArgs e)
+        {
         }
 	}
 }

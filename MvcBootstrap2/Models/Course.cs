@@ -80,6 +80,11 @@ namespace MvcBootstrap2.Models
             //a.CreateIndex(IndexKeys<Course>.Ascending(x => x.CourseID), IndexOptions.SetUnique(true));
             return a;
         }
+
+        public override string ToString()
+        {
+            return Title;
+        }
     }
 
     public class CourseModel

@@ -30,6 +30,11 @@ namespace MvcBootstrap2.Models
                 return LastName + ", " + FirstMidName;
             }
         }
+
+        public override string ToString()
+        {
+            return FullName;
+        }
     }
 
     public abstract class PersonModel

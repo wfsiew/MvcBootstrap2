@@ -10,6 +10,8 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using PagedList;
+using DoddleReport;
+using DoddleReport.Web;
 
 namespace MvcBootstrap2.Controllers
 {
@@ -307,6 +309,30 @@ namespace MvcBootstrap2.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult HtmlReport(string sortOrder, string currentFilter, string searchString)
+        {
+            Report report = GetReport(sortOrder, currentFilter, searchString);
+            return new ReportResult(report);
+        }
+
+        public ActionResult PdfReport(string sortOrder, string currentFilter, string searchString)
+        {
+            Report report = GetReport(sortOrder, currentFilter, searchString);
+            return new ReportResult(report, new DoddleReport.iTextSharp.PdfReportWriter(), "application/pdf");
+        }
+
+        public ActionResult ExcelReport(string sortOrder, string currentFilter, string searchString)
+        {
+            var report = GetReport(sortOrder, currentFilter, searchString);
+            return new ReportResult(report, new DoddleReport.OpenXml.ExcelReportWriter(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        }
+
+        public ActionResult CsvReport(string sortOrder, string currentFilter, string searchString)
+        {
+            var report = GetReport(sortOrder, currentFilter, searchString);
+            return new ReportResult(report, new DoddleReport.Writers.DelimitedTextReportWriter(), "text/plain;charset=UTF-8");
+        }
+
         private void PopulateInstructorsDropDownList(object selectedInstructor = null)
         {
             var officeAssignments = DbHelper.Db.GetCollection<OfficeAssignment>("officeassignments");
@@ -337,6 +363,99 @@ namespace MvcBootstrap2.Controllers
             }
 
             ViewBag.Courses = viewModel;
+        }
+
+        private Report GetReport(string sortOrder, string currentFilter, string searchString)
+        {
+            ViewBag.menu = MENU;
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+            ViewBag.FirstNameSortParm = sortOrder == "FirstName" ? "FirstName_desc" : "FirstName";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "Date_desc" : "Date";
+            ViewBag.LocationSortParm = sortOrder == "Loc" ? "Loc_desc" : "Loc";
+
+            InstructorIndexData viewModel = new InstructorIndexData();
+
+            if (searchString == null)
+                searchString = currentFilter;
+
+            string keyword = string.IsNullOrEmpty(searchString) ? null : searchString.ToUpper();
+
+            ViewBag.CurrentFilter = searchString;
+            MongoCursor<Instructor> c = null;
+            IOrderedEnumerable<Instructor> el = null;
+            var instructors = Instructor.GetCollection();
+
+            //var instructors = repository.GetInstructors()
+            //    .Include(i => i.OfficeAssignment)
+            //    .Include(i => i.Courses.Select(x => x.Department));
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                var q = Query<Instructor>.Where(x => x.LastName.ToUpper().Contains(keyword) ||
+                    x.FirstMidName.ToUpper().Contains(keyword));
+                c = instructors.Find(q);
+            }
+
+            else
+                c = instructors.FindAll();
+
+            switch (sortOrder)
+            {
+                case "Name_desc":
+                    el = c.OrderByDescending(x => x.LastName);
+                    break;
+
+                case "FirstName":
+                    el = c.OrderBy(x => x.FirstMidName);
+                    break;
+
+                case "FirstName_desc":
+                    el = c.OrderByDescending(x => x.FirstMidName);
+                    break;
+
+                case "Date":
+                    el = c.OrderBy(x => x.HireDate);
+                    break;
+
+                case "Date_desc":
+                    el = c.OrderByDescending(x => x.HireDate);
+                    break;
+
+                case "Loc":
+                    el = c.OrderBy(x => x.OfficeAssignment.Location);
+                    break;
+
+                case "Loc_desc":
+                    el = c.OrderByDescending(x => x.OfficeAssignment.Location);
+                    break;
+
+                default:
+                    el = c.OrderBy(x => x.LastName);
+                    break;
+            }
+
+            var lr = el.Select(x => new
+            {
+                LastName = x.LastName,
+                FirstName = x.FirstMidName,
+                HireDate = x.HireDate,
+                Office = x.OfficeAssignment,
+                Courses = x.GetCourses()
+            });
+            Report report = new Report(lr.ToReportSource());
+            report.TextFields.Title = "Instructors Report";
+            report.TextFields.Header = string.Format(@"Report Generated: {0} Total Instructors: {1}", DateTime.Now, c.Count());
+
+            report.RenderHints.FreezeRows = 4;
+
+            report.RenderingRow += report_RenderingRow;
+
+            return report;
+        }
+
+        private void report_RenderingRow(object sender, ReportRowEventArgs e)
+        {
         }
 	}
 }
