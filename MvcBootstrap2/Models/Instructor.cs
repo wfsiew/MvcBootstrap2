@@ -55,7 +55,7 @@ namespace MvcBootstrap2.Models
             return a;
         }
 
-        public string GetCourses()
+        public string GetCourses(bool ishtml)
         {
             IEnumerable<Course> l = Courses;
             StringBuilder sb = new StringBuilder();
@@ -63,8 +63,15 @@ namespace MvcBootstrap2.Models
             {
                 Course o = l.ElementAt(i);
                 string s = string.Format("{0} {1}", o.CourseID, o.Title);
+                
                 if (i < l.Count() - 1)
-                    sb.AppendLine(s);
+                {
+                    if (ishtml)
+                        sb.Append(s + "<br/>");
+
+                    else
+                        sb.AppendLine(s);
+                }
 
                 else
                     sb.Append(s);

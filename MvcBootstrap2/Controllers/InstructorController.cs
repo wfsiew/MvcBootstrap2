@@ -311,7 +311,7 @@ namespace MvcBootstrap2.Controllers
 
         public ActionResult HtmlReport(string sortOrder, string currentFilter, string searchString)
         {
-            Report report = GetReport(sortOrder, currentFilter, searchString);
+            Report report = GetReport(sortOrder, currentFilter, searchString, true);
             return new ReportResult(report);
         }
 
@@ -365,7 +365,7 @@ namespace MvcBootstrap2.Controllers
             ViewBag.Courses = viewModel;
         }
 
-        private Report GetReport(string sortOrder, string currentFilter, string searchString)
+        private Report GetReport(string sortOrder, string currentFilter, string searchString, bool ishtml = false)
         {
             ViewBag.menu = MENU;
             ViewBag.CurrentSort = sortOrder;
@@ -441,7 +441,7 @@ namespace MvcBootstrap2.Controllers
                 FirstName = x.FirstMidName,
                 HireDate = x.HireDate,
                 Office = x.OfficeAssignment,
-                Courses = x.GetCourses()
+                Courses = x.GetCourses(ishtml)
             });
             Report report = new Report(lr.ToReportSource());
             report.TextFields.Title = "Instructors Report";
