@@ -314,16 +314,16 @@ namespace MvcBootstrap2.Controllers
             }
 
             var lr = el.Select(x => new
-            { 
-                EnrollmentDate = x.EnrollmentDate, 
+            {
                 LastName = x.LastName, 
-                FirstName = x.FirstMidName
+                FirstName = x.FirstMidName,
+                EnrollmentDate = x.EnrollmentDate
             });
             Report report = new Report(lr.ToReportSource());
             report.TextFields.Title = "Students Report";
             report.TextFields.Header = string.Format(@"Report Generated: {0} Total Students: {1}", DateTime.Now, c.Count());
 
-            //report.DataFields["EnrollmentIdList"].Hidden = true;
+            report.DataFields["EnrollmentDate"].DataFormatString = "{0:yyyy-MM-dd}";
             //report.DataFields["Id"].Hidden = true;
             //report.DataFields["Enrollments"].Hidden = true;
             //report.DataFields["FullName"].Hidden = true;
